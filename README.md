@@ -1,0 +1,1 @@
+# fastapi-jinja-tailwind-starter
