@@ -1,11 +1,11 @@
-#FastAPI + Jinja + Tailwind Starter
+# FastAPI + Jinja + Tailwind Starter
 
-##Why this exists
+## Why this exists
 
-##What you get
+## What you get
 
-##Quick start (dev & prod)
+## Quick start (dev & prod)
 
-##Architecture at a glance
+## Architecture at a glance
 
-##License
+## License
