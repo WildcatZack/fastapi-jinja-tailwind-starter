@@ -1,0 +1,78 @@
+version: "3.9"
+name: fastapi-jinja-tailwind-starter
+
+services:
+  fjts-backend:
+    profiles: ["dev"]
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.dev
+    container_name: fjts-backend
+    env_file:
+      - .env
+    environment:
+      - PORT=${UVICORN_INTERNAL_DEV:-8000}
+    ports:
+      - "${UVICORN_EXTERNAL_DEV:-18000}:${UVICORN_INTERNAL_DEV:-8000}"
+    volumes:
+      - ./backend:/app/backend
+    working_dir: /app
+    command: >
+      uvicorn backend.app.main:app
+      --host 0.0.0.0
+      --port ${UVICORN_INTERNAL_DEV:-8000}
+      --reload
+      --reload-dir /app/backend
+
+  fjts-frontend:
+    profiles: ["dev"]
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: fjts-frontend
+    working_dir: /workspace/frontend
+    environment:
+      - CHOKIDAR_USEPOLLING=1
+      - CHOKIDAR_INTERVAL=250
+    volumes:
+      - ./frontend/src:/workspace/frontend/src
+      - ./backend/app/templates:/workspace/backend/app/templates:ro
+      - ./backend/app/static/css:/workspace/backend/app/static/css
+      - ./backend/app/static/js:/workspace/backend/app/static/js
+    command: ["npm", "run", "dev"]
+
+  fjts-backend-prod:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.prod
+    container_name: fjts-backend-prod
+    env_file:
+      - .env
+    environment:
+      - PORT=${UVICORN_INTERNAL:-8000}
+    ports:
+      - "${UVICORN_EXTERNAL:-8000}:${UVICORN_INTERNAL:-8000}"
+
+  fjts-backend-pull:
+    profiles: ["pull"]
+    image: dr.farrow.cloud/fjts:v0.1.0
+    container_name: fjts-backend-pull
+    env_file:
+      - .env
+    environment:
+      - PORT=${UVICORN_INTERNAL:-8000}
+    ports:
+      - "${UVICORN_EXTERNAL:-8000}:${UVICORN_INTERNAL:-8000}"
+    pull_policy: always
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-qO-",
+          "http://localhost:${UVICORN_INTERNAL:-8000}/health",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 6

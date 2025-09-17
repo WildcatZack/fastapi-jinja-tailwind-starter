@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Let Tailwind find classes in both dev and prod container layouts */
+
+/* Relative (works in most cases) */
+@source "../backend/app/templates/**/*.html";
+
+/* Absolute path inside the DEV frontend container */
+@source "/workspace/backend/app/templates/**/*.html";
+
+/* Absolute path inside the PROD build stage (assets built at /app) */
+@source "/app/backend/app/templates/**/*.html";
+
+/* JS sources (Alpine components) */
+@source "./**/*.js";
+
+/* Simple layout utility to sanity-check compile output */
+@utility wrap {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1rem;
+}
+
+@utility debug {
+  outline: 1px dashed blue;
+}

@@ -1,0 +1,44 @@
+# ── Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.python-version
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# ── Node
+frontend/node_modules/
+frontend/.npmrc.local
+npm-debug.log*
+
+# ── Env & secrets (never commit real envs)
+.env
+.env.*
+!.env.example
+
+# ── Editor/OS noise
+.DS_Store
+._*
+*.swp
+*.swx
+*~
+.#*
+# VSCode
+.vscode/
+# JetBrains
+.idea/
+
+# ── Docker artifacts
+docker-data/
+*.tar
+
+# ── Build outputs (we keep CSS/JS outputs inside backend; do not ignore them)
+# If you later add a separate frontend/dist, ignore it:
+frontend/dist/
+
+# ── Misc
+Thumbs.db

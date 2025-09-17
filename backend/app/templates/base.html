@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}FJTS{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/app.css') }}" />
+  </head>
+  <body class="min-h-dvh bg-slate-50 text-slate-900">
+    <header class="bg-white border-b">
+      <nav class="wrap flex items-center justify-between py-3">
+        <a href="/" class="font-semibold text-lg">FJTS</a>
+        <span class="text-xs px-2 py-1 rounded bg-emerald-100 text-emerald-800"
+          >Tailwind v4 OK</span
+        >
+      </nav>
+    </header>
+
+    <main class="wrap py-8">{% block content %}{% endblock %}</main>
+
+    <footer class="wrap py-8 text-sm text-slate-500">
+      <p>&copy; {{ 2025 }} FastAPI + Jinja + Tailwind Starter</p>
+    </footer>
+
+    <script
+      type="module"
+      src="{{ url_for('static', path='js/app.js') }}"
+    ></script>
+  </body>
+</html>

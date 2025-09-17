@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Home · FJTS{% endblock %} {% block
+content %}
+<section class="space-y-6">
+  <h1 class="text-2xl font-bold">FastAPI + Jinja + Tailwind + Alpine</h1>
+  <p class="text-slate-600">
+    If you can see the green badge in the navbar, Tailwind v4 compiled
+    successfully.
+  </p>
+
+  <div x-data="{ count: 0 }" class="border rounded-xl p-4 bg-white shadow-sm">
+    <p class="mb-3">AlpineJS counter sanity check:</p>
+    <div class="flex items-center gap-3">
+      <button
+        class="px-3 py-1 rounded bg-slate-900 text-white"
+        @click="count++"
+      >
+        Increment
+      </button>
+      <span class="font-mono">count: <strong x-text="count"></strong></span>
+    </div>
+  </div>
+
+  <p class="text-xs text-slate-500 debug">
+    Healthcheck is at <code>/health</code>.
+  </p>
+</section>
+{% endblock %}

@@ -1,0 +1,48 @@
+# ---- Stage 1: build frontend assets (no host volumes) ----
+FROM node:20-alpine AS assets
+WORKDIR /app
+
+# Install deps into the image
+COPY frontend/package.json frontend/package-lock.json* ./frontend/
+RUN cd frontend && npm install
+
+# Copy sources + templates (Tailwind scans templates)
+COPY frontend/src ./frontend/src
+COPY backend/app/templates ./backend/app/templates
+
+# One-shot build writes into ../backend/app/static/{css,js}
+WORKDIR /app/frontend
+RUN npm run build
+
+# ---- Stage 2: Python runtime (self-contained) ----
+FROM python:3.12-slim AS runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+# System deps kept minimal
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# Python deps
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
+
+# App source
+COPY backend ./backend
+
+# Bring in the compiled assets from Stage 1
+COPY --from=assets /app/backend/app/static/css ./backend/app/static/css
+COPY --from=assets /app/backend/app/static/js  ./backend/app/static/js
+
+# Optional hardening (simple, non-root)
+RUN useradd -u 10001 -r -s /sbin/nologin appuser && chown -R appuser:appuser /app
+USER appuser
+
+ENV PORT=8000
+EXPOSE 8000
+CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]

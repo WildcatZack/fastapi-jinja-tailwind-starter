@@ -1,0 +1,25 @@
+{
+  "name": "fjts-frontend",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "scripts": {
+    "dev:css": "chokidar \"../backend/app/templates/**/*.html\" \"src/**/*.css\" \"src/**/*.js\" -i \"../backend/app/static/**\" -i \"**/._*\" -i \"**/.DS_Store\" -i \"**/*.swp\" -i \"**/*.swx\" -i \"**/*~\" -i \"**/#*#\" -i \"**/.#*\" --initial --await-write-finish=250 -c \"npx @tailwindcss/cli -i ./src/input.css -o ../backend/app/static/css/app.css\"",
+    "dev:js": "esbuild ./src/alpine.entry.js --bundle --format=esm --outfile=../backend/app/static/js/app.js --watch=forever",
+    "dev": "npm-run-all --parallel dev:css dev:js",
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ../backend/app/static/css/app.css --minify",
+    "build:js": "esbuild ./src/alpine.entry.js --bundle --format=esm --outfile=../backend/app/static/js/app.js --minify",
+    "build": "npm-run-all build:css build:js"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "chokidar-cli": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
