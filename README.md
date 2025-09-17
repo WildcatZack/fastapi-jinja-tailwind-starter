@@ -5,33 +5,6 @@ No databases, no CI — just the essentials.
 
 ---
 
-## Repository Layout
-
-/  
-&nbsp;&nbsp;backend/  
-&nbsp;&nbsp;&nbsp;&nbsp;app/  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;templates/ # Jinja pages (scanned by Tailwind)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static/  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;css/app.css # built by Tailwind CLI  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;js/app.js # built by esbuild  
-&nbsp;&nbsp;&nbsp;&nbsp;main.py  
-&nbsp;&nbsp;&nbsp;&nbsp;routers/  
-&nbsp;&nbsp;frontend/  
-&nbsp;&nbsp;&nbsp;&nbsp;src/  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input.css # Tailwind entry (v4, config-less)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpine.entry.js # Alpine init (bundled)  
-&nbsp;&nbsp;&nbsp;&nbsp;Dockerfile # dev watcher image  
-&nbsp;&nbsp;&nbsp;&nbsp;package.json  
-&nbsp;&nbsp;backend/Dockerfile.dev # dev backend (reload)  
-&nbsp;&nbsp;backend/Dockerfile.prod # prod backend (multi-stage; assets baked in)  
-&nbsp;&nbsp;compose.yml  
-&nbsp;&nbsp;.env.example  
-&nbsp;&nbsp;.gitignore  
-&nbsp;&nbsp;LICENSE  
-&nbsp;&nbsp;README.md
-
----
-
 ## Environment
 
 Copy and edit:
