@@ -1,7 +1,7 @@
 # FastAPI + Jinja2 + Tailwind v4 + Alpine + Docker (Starter)
 
-Self-contained starter with Docker Compose profiles for **dev** (hot reload + watchers) and **prod** (single image with built assets).  
-No databases, no CI — just the essentials.
+This project is an **easy way to spin up a development environment** with FastAPI, Jinja2 templates, Tailwind v4, AlpineJS, and Docker.  
+It can serve as a **guide to learn from** or a **full template to start projects with**.
 
 ---
 
@@ -29,11 +29,6 @@ Copy and edit:
 
 - App: http://localhost:${UVICORN_EXTERNAL_DEV}/
 - Health: http://localhost:${UVICORN_EXTERNAL_DEV}/health
-
-**Notes**
-
-- CSS/JS build live into `backend/app/static/{css,js}`.
-- If CSS changes don’t appear, do a browser **Empty Cache and Hard Reload** (Chrome).
 
 ---
 
@@ -72,6 +67,18 @@ Copy and edit:
 - **Dev CSS doesn’t update** → Save again, and if needed do a browser **Hard Reload**.
 - **Healthcheck 405** → `curl -sI` uses `HEAD`. Our `/health` is `GET`-only; use:  
    curl -s http://localhost:${UVICORN_EXTERNAL}/health
+
+---
+
+## Future Improvements
+
+- Mobile-first responsive layout in base template.
+- Multiple `base.html` templates to demonstrate flexible layouts.
+- Dark/light theme toggle (Alpine-driven).
+- More sample Jinja pages (e.g. `/about`, `/contact`).
+- Production hardening (non-root user, healthcheck baked in).
+- Optional devcontainer / CI/CD setup.
+- Swapable CSS frameworks (showing Tailwind vs. Bootstrap starter).
 
 ---
 
