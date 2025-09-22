@@ -15,12 +15,19 @@
 @source "./**/*.js";
 
 /* Simple layout utility to sanity-check compile output */
-@utility wrap {
-  margin-inline: auto;
-  max-width: 72rem;
-  padding-inline: 1rem;
+
+/* Custom utilities */
+/* Ensure elements hidden until Alpine initializes don't flash */
+@layer base {
+  [x-cloak] {
+    display: none !important;
+  }
 }
 
-@utility debug {
-  outline: 1px dashed blue;
+/* Bootstrap-style centered container using Tailwind's container class */
+@layer utilities {
+  .wrap {
+    /* container sets max-width by breakpoints; we add common side padding */
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }

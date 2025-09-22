@@ -1,0 +1,18 @@
+{# Jinja macros for navbar items #} {% macro nav_links(links, current_path,
+variant='desktop') -%} {%- set is_desktop = (variant == 'desktop') -%} {%- set
+wrapper_classes = 'hidden md:flex items-center gap-6 text-sm' if is_desktop else
+'flex flex-col gap-1 text-base' -%}
+<ul class="{{ wrapper_classes }}">
+  {%- for link in links %} {%- set active = (current_path == link.href) -%} {%-
+  set base_classes = 'block px-3 py-2 rounded' -%} {%- if is_desktop %} {%- set
+  state_classes = 'text-slate-900 font-semibold underline' if active else
+  'text-slate-700 hover:underline' -%} {%- else %} {%- set state_classes =
+  'bg-slate-100' if active else 'hover:bg-slate-50' -%} {%- endif %}
+  <li>
+    <a href="{{ link.href }}" class="{{ base_classes }} {{ state_classes }}"
+      >{{ link.label }}</a
+    >
+  </li>
+  {%- endfor %}
+</ul>
+{%- endmacro %}

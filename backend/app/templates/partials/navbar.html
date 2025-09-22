@@ -1,0 +1,51 @@
+{# Responsive navbar partial using a macro for links #} {% from
+"components/nav.html" import nav_links %} {# Default links; caller can override
+by passing a `links` variable #} {% set links = links if links is defined else [
+{'href': '/', 'label': 'Home'}, {'href': '/about', 'label': 'About'}, {'href':
+'/contact', 'label': 'Contact'} ] %} {% set current_path = request.url.path %}
+
+<header
+  x-data="{ open: false }"
+  @keydown.escape.window="open = false"
+  class="bg-slate-100 border-b"
+>
+  <nav class="wrap flex items-center justify-between py-3">
+    <!-- Brand -->
+    <a href="/" class="font-semibold text-lg">FJTS</a>
+
+    <!-- Desktop links (macro) -->
+    <div class="hidden md:block">
+      {{ nav_links(links, current_path, 'desktop') }}
+    </div>
+
+    <!-- Mobile hamburger -->
+    <div class="md:hidden">
+      <button
+        type="button"
+        @click="open = !open"
+        :aria-expanded="open"
+        aria-controls="mobileNav"
+        class="px-2 py-1 border rounded-md shadow-sm"
+      >
+        ☰
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile collapse (full width) -->
+  <div
+    id="mobileNav"
+    x-cloak
+    x-show="open"
+    @click.outside="open = false"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-2"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-2"
+    class="md:hidden border-t bg-white shadow-sm"
+  >
+    <div class="wrap py-3">{{ nav_links(links, current_path, 'mobile') }}</div>
+  </div>
+</header>
